@@ -1,0 +1,47 @@
+{
+  "raw_path": "DataSet/online_retail_II.xlsx",
+  "sheets": [
+    "Year 2009-2010",
+    "Year 2010-2011"
+  ],
+  "periods": {
+    "observation_start": "2010-01-01",
+    "observation_end": "2010-12-31",
+    "prediction_start": "2011-01-01",
+    "prediction_end": "2011-06-30",
+    "churn_definition": "Eligible customers purchased at least once in the observation period. churn=1 if they have zero purchases in the prediction period; else 0."
+  },
+  "cleaning": {
+    "rows_raw": 1067371,
+    "rows_after_missing_customer_id": 824364,
+    "rows_after_cancellations": 805620,
+    "rows_after_invalid_qty_price": 805549,
+    "rows_after_duplicates": 779425,
+    "missing_customer_id_dropped": 243007,
+    "cancellations_dropped": 18744,
+    "invalid_qty_price_dropped": 71,
+    "duplicates_dropped": 26124,
+    "date_min": "2009-12-01 07:45:00",
+    "date_max": "2011-12-09 12:50:00"
+  },
+  "validation": {
+    "n_customers": 4231,
+    "n_churn": 2217,
+    "n_retained": 2014,
+    "churn_rate": 0.5239896005672418,
+    "duplicate_customer_ids": 0,
+    "null_churn_labels": 0,
+    "label_matches_prediction_flag": true,
+    "obs_purchase_dates_within_observation": true,
+    "all_labeled_customers_in_observation": true,
+    "no_extra_observation_customers_missing": true,
+    "all_obs_monetary_positive": true,
+    "all_obs_invoices_positive": true,
+    "all_passed": true
+  },
+  "outputs": {
+    "transactions_cleaned": "data/processed/transactions_cleaned.parquet",
+    "customer_churn_labels_parquet": "data/processed/customer_churn_labels.parquet",
+    "customer_churn_labels_csv": "data/processed/customer_churn_labels.csv"
+  }
+}
