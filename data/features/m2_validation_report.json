@@ -1,0 +1,121 @@
+{
+  "periods": {
+    "observation_start": "2010-01-01",
+    "observation_end": "2010-12-31",
+    "prediction_start": "2011-01-01",
+    "prediction_end": "2011-06-30",
+    "obs_midpoint_for_trends": "2010-06-30"
+  },
+  "m1_handoff_validation": {
+    "n_customers": 4231,
+    "n_churn": 2217,
+    "churn_rate": 0.5239896005672418,
+    "duplicate_customer_ids": 0,
+    "null_churn": 0,
+    "matches_m1_n_customers": true,
+    "matches_m1_n_churn": true,
+    "churn_values_binary": true,
+    "m1_report_all_passed": true,
+    "all_passed": true
+  },
+  "feature_validation": {
+    "n_rows": 4231,
+    "n_m1_customers": 4231,
+    "row_count_matches_m1": true,
+    "duplicate_customer_ids": 0,
+    "churn_unchanged": true,
+    "null_counts": {
+      "recency_days": 0,
+      "frequency": 0,
+      "monetary": 0,
+      "avg_order_value": 0,
+      "purchase_interval_days": 0,
+      "product_diversity": 0,
+      "cancellation_rate": 0,
+      "spending_trend": 0,
+      "order_trend": 0
+    },
+    "recency_non_negative": true,
+    "frequency_positive": true,
+    "monetary_positive": true,
+    "cancellation_rate_bounds": true,
+    "trend_bounds": true,
+    "no_null_numeric": true,
+    "all_passed": true
+  },
+  "outlier_iqr_summary": {
+    "recency_days": {
+      "q1": 35.0,
+      "q3": 135.0,
+      "iqr": 100.0,
+      "low": -115.0,
+      "high": 285.0,
+      "n_outliers": 252,
+      "pct_outliers": 0.059560387615220985
+    },
+    "frequency": {
+      "q1": 1.0,
+      "q3": 5.0,
+      "iqr": 4.0,
+      "low": -5.0,
+      "high": 11.0,
+      "n_outliers": 266,
+      "pct_outliers": 0.06286929803828882
+    },
+    "monetary": {
+      "q1": 306.87,
+      "q3": 1678.87,
+      "iqr": 1372.0,
+      "low": -1751.13,
+      "high": 3736.87,
+      "n_outliers": 402,
+      "pct_outliers": 0.09501299929094777
+    },
+    "avg_order_value": {
+      "q1": 178.57999999999998,
+      "q3": 423.97625,
+      "iqr": 245.39625,
+      "low": -189.51437500000003,
+      "high": 792.0706250000001,
+      "n_outliers": 296,
+      "pct_outliers": 0.06995982037343418
+    },
+    "purchase_interval_days": {
+      "q1": 37.11805555555556,
+      "q3": 63.5,
+      "iqr": 26.381944444444443,
+      "low": -2.454861111111107,
+      "high": 103.07291666666666,
+      "n_outliers": 500,
+      "pct_outliers": 0.1181753722524226
+    },
+    "product_diversity": {
+      "q1": 17.0,
+      "q3": 78.0,
+      "iqr": 61.0,
+      "low": -74.5,
+      "high": 169.5,
+      "n_outliers": 305,
+      "pct_outliers": 0.07208697707397778
+    }
+  },
+  "churn_rate": 0.5239896005672418,
+  "n_features_numeric": 11,
+  "purchase_interval_impute_median": 48.75,
+  "n_purchase_interval_imputed": 1418,
+  "figures": [
+    "data/features/figures/churn_distribution.png",
+    "data/features/figures/country_top10.png",
+    "data/features/figures/box_recency_days_by_churn.png",
+    "data/features/figures/box_frequency_by_churn.png",
+    "data/features/figures/box_monetary_by_churn.png",
+    "data/features/figures/feature_histograms.png",
+    "data/features/figures/corr_with_churn.png"
+  ],
+  "outputs": {
+    "customer_features_parquet": "data/features/customer_features.parquet",
+    "customer_features_csv": "data/features/customer_features.csv",
+    "feature_summary_csv": "data/features/feature_summary.csv"
+  },
+  "note": "M1 churn labels copied unchanged. Features use observation-period data only."
+}
