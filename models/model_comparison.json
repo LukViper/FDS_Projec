@@ -1,0 +1,48 @@
+{
+  "selected_model": "random_forest",
+  "selection_criterion": "Highest validation PR-AUC; ties broken by validation ROC-AUC then F1",
+  "rows": [
+    {
+      "model": "logistic_regression",
+      "val_roc_auc": 0.6700353281965521,
+      "val_pr_auc": 0.6911469322938897,
+      "val_precision": 0.7553648068669528,
+      "val_recall": 0.28711256117455136,
+      "val_f1": 0.4160756501182033,
+      "test_roc_auc": 0.7150305377625502,
+      "test_pr_auc": 0.5945094384835404,
+      "test_precision": 0.6521739130434783,
+      "test_recall": 0.02040816326530612,
+      "test_f1": 0.0395778364116095,
+      "selected": false
+    },
+    {
+      "model": "random_forest",
+      "val_roc_auc": 0.690630333001597,
+      "val_pr_auc": 0.724604219301304,
+      "val_precision": 0.7085828343313373,
+      "val_recall": 0.5791190864600326,
+      "val_f1": 0.6373429084380611,
+      "test_roc_auc": 0.7547555599693243,
+      "test_pr_auc": 0.625015744931889,
+      "test_precision": 0.6459074733096085,
+      "test_recall": 0.49387755102040815,
+      "test_f1": 0.5597532767925983,
+      "selected": true
+    },
+    {
+      "model": "xgboost",
+      "val_roc_auc": 0.6586536981747668,
+      "val_pr_auc": 0.6910661928286866,
+      "val_precision": 0.6407766990291263,
+      "val_recall": 0.7536704730831973,
+      "val_f1": 0.6926536731634183,
+      "test_roc_auc": 0.7091315358260093,
+      "test_pr_auc": 0.5733197341477058,
+      "test_precision": 0.5166015625,
+      "test_recall": 0.7197278911564626,
+      "test_f1": 0.6014781125639568,
+      "selected": false
+    }
+  ]
+}

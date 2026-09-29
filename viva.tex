@@ -1,0 +1,578 @@
+% =============================================================================
+% viva.tex --- Viva / Project Defence Notes
+% Customer Churn Prediction with Explainable AI
+% =============================================================================
+% Purpose: Maintain what each member has done, how it was done, and why that
+% method was chosen --- for proposal, progress reviews, and final viva.
+%
+% Status tags:
+%   [DONE]     Implemented and evidenced in the repository
+%   [PLANNED]  Agreed method; update when artifacts exist
+%
+% Keep aligned with PLAN.md (intent) and PROGRESS.md (evidence).
+% Compile: pdflatex viva.tex   (run twice for TOC)
+% =============================================================================
+
+\documentclass[11pt,a4paper]{article}
+
+% Minimal preamble for sparse TeX installs. Add geometry/booktabs/hyperref later if available.
+\usepackage{graphicx}
+
+% Margins without geometry.sty
+\setlength{\oddsidemargin}{0in}
+\setlength{\evensidemargin}{0in}
+\setlength{\textwidth}{6.5in}
+\setlength{\topmargin}{-0.4in}
+\setlength{\headheight}{14pt}
+\setlength{\headsep}{16pt}
+\setlength{\textheight}{9.0in}
+\setlength{\parskip}{0.35em}
+\setlength{\parindent}{0pt}
+
+\newcommand{\done}{[DONE]}
+\newcommand{\planned}{[PLANNED]}
+% Incomplete local TeX fonts: map typewriter to roman
+\renewcommand{\texttt}[1]{#1}
+\makeatletter
+\renewcommand{\verbatim@font}{\normalfont\rmfamily}
+\makeatother
+
+\title{\textbf{Viva \& Project Defence Notes}\\[0.35em]
+\large Customer Churn Prediction with Explainable AI}
+\author{4-Member Academic Project Team\\
+UCI Online Retail~II Dataset}
+\date{Last updated: 25 September 2026\\
+\textit{Completion evidence: \texttt{PROGRESS.md}}}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This file is the team's viva preparation document. For each member it records
+\textbf{what} was (or will be) done, \textbf{how} the work is performed, and
+\textbf{why} that method was chosen. Completed work is marked \done{} and must
+match repository evidence. Planned work is marked \planned{} and must be updated
+when artifacts exist. Use this for proposal defence, progress viva, and final
+demonstration.
+\end{abstract}
+
+\tableofcontents
+\newpage
+
+% -----------------------------------------------------------------------------
+\section{Project Overview (Common to All Members)}
+% -----------------------------------------------------------------------------
+
+\subsection{Problem statement}
+E-commerce businesses lose revenue when customers stop purchasing. Early
+identification of likely churners enables targeted retention. This project
+builds a temporally valid customer-churn classifier on historical retail
+transactions, explains predictions with SHAP, and deploys an interactive
+Streamlit demonstration.
+
+\subsection{Objective}
+\begin{enumerate}
+  \item Convert raw invoice line items into a customer-level churn dataset.
+  \item Engineer behavioural / RFM features without target leakage.
+  \item Train and compare Logistic Regression, Random Forest, and XGBoost
+        under a temporal train/validation/test split.
+  \item Explain the final model with SHAP and support findings with statistical
+        analysis.
+  \item Deploy a Streamlit app showing churn probability, risk category, and
+        top contributing factors.
+\end{enumerate}
+
+\subsection{Dataset}
+\begin{tabular}{|p{0.28\textwidth}|p{0.62\textwidth}|}
+\hline
+\textbf{Field} & \textbf{Value} \\
+\hline
+Name & Online Retail~II (UCI Machine Learning Repository) \\
+\hline
+Local path & \texttt{DataSet/online\_retail\_II.xlsx} \\
+\hline
+Sheets & \texttt{Year 2009-2010}, \texttt{Year 2010-2011} \\
+\hline
+Raw span & 2009-12-01 to 2011-12-09 \\
+\hline
+Columns & Invoice, StockCode, Description, Quantity, InvoiceDate, Price, Customer~ID, Country \\
+\hline
+Citation & Chen, D.\ (2019). \textit{Online Retail II}. UCI ML Repository. \\
+\hline
+\end{tabular}
+
+\subsection{Development model}
+Sequential module-based development with verifiable individual contribution:
+
+\begin{center}
+\texttt{M1 (Data)} $\rightarrow$ \texttt{M2 (EDA/Features)} $\rightarrow$
+\texttt{M3 (ML)} $\rightarrow$ \texttt{M4 (XAI + Streamlit)}
+\end{center}
+
+Upstream artifacts must not be silently redefined. Changes are logged in
+\texttt{PROGRESS.md}.
+
+\subsection{Tools}
+Python, pandas, Jupyter / VS~Code / Cursor, GitHub, scikit-learn, XGBoost,
+SHAP, Streamlit.
+
+\subsection{Current completion snapshot}
+\begin{tabular}{|l|l|p{0.48\textwidth}|}
+\hline
+\textbf{Module} & \textbf{Owner} & \textbf{Status} \\
+\hline
+M1 Data \& Preprocessing & Member~1 & \done{} (commit \texttt{c9d5a74} on \texttt{Shasank}) \\
+\hline
+M2 EDA \& Features & Member~2 & Implementation \done{}; git commit pending \\
+\hline
+M3 Machine Learning & Member~3 & Implementation \done{} (RF selected); git commit pending \\
+\hline
+M4 XAI \& Deployment & Member~4 & \planned{} --- not started (handoff ready) \\
+\hline
+\end{tabular}
+
+\vspace{0.6em}
+\noindent\textit{Do not claim M4 as completed in a viva until
+\texttt{PROGRESS.md} shows repository evidence.}
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{Member~1 --- Data Collection \& Preprocessing}
+\label{sec:m1}
+% -----------------------------------------------------------------------------
+
+\subsection{Role summary}
+Own the raw dataset, cleaning rules, temporal periods, churn definition, and
+customer-level labelled dataset handed to Member~2.
+
+\subsection{What has been done \done{}}
+\begin{enumerate}
+  \item Acquired and stored UCI Online Retail~II at
+        \texttt{DataSet/online\_retail\_II.xlsx}.
+  \item Documented source and citation in \texttt{docs/dataset\_source.md}.
+  \item Inspected structure: both sheets concatenated; about 1{,}067{,}371 raw rows.
+  \item Implemented reproducible cleaning in \texttt{src/preprocessing.py}
+        and \texttt{notebooks/m1\_preprocessing.ipynb}.
+  \item Defined observation / prediction periods and churn criteria
+        (\texttt{docs/preprocessing\_decisions.md}).
+  \item Generated customer-level labels and validation report under
+        \texttt{data/processed/}.
+\end{enumerate}
+
+\subsubsection*{Key quantitative results}
+\begin{tabular}{|l|r|}
+\hline
+\textbf{Metric} & \textbf{Value} \\
+\hline
+Raw rows & 1{,}067{,}371 \\
+\hline
+Missing Customer~ID dropped & 243{,}007 \\
+\hline
+Cancellations dropped & 18{,}744 \\
+\hline
+Invalid qty/price dropped & 71 \\
+\hline
+Exact duplicates dropped & 26{,}124 \\
+\hline
+Cleaned transactions & 779{,}425 \\
+\hline
+Eligible customers & 4{,}231 \\
+\hline
+Churned ($=1$) / Retained ($=0$) & 2{,}217 / 2{,}014 \\
+\hline
+Churn rate & $\approx$ 52.4\% \\
+\hline
+Validation & \texttt{all\_passed = true} \\
+\hline
+\end{tabular}
+
+\subsubsection*{Primary artifacts}
+\begin{itemize}
+  \item \texttt{data/processed/transactions\_cleaned.parquet}
+  \item \texttt{data/processed/customer\_churn\_labels.parquet} (and \texttt{.csv})
+  \item \texttt{data/processed/m1\_validation\_report.json}
+\end{itemize}
+
+\subsection{How it was done}
+\begin{enumerate}
+  \item \textbf{Load:} Read both Excel sheets with pandas/\texttt{openpyxl};
+        concatenate; keep the raw file untouched.
+  \item \textbf{Clean (ordered pipeline):}
+        \begin{enumerate}
+          \item Drop rows with missing \texttt{Customer ID}.
+          \item Drop cancelled invoices (\texttt{Invoice} starts with \texttt{C}).
+          \item Drop rows with \texttt{Quantity} $\le 0$ or \texttt{Price} $\le 0$.
+          \item Drop exact duplicate rows.
+          \item Cast text/ID columns to string; compute
+                \texttt{line\_revenue = Quantity $\times$ Price}.
+        \end{enumerate}
+  \item \textbf{Label:} Keep customers with at least one cleaned purchase in the
+        observation window; set \texttt{churn=1} if they have zero purchases in
+        the prediction window, else $0$.
+  \item \textbf{Validate:} Unique Customer~IDs, non-null labels, label
+        consistency, observation-only dates for \texttt{obs\_*} fields, positive
+        monetary/invoice counts.
+  \item \textbf{Export:} Write parquet/CSV and JSON report via
+        \texttt{python -m src.preprocessing}.
+\end{enumerate}
+
+\subsection{Why these methods were chosen}
+\begin{description}
+  \item[Drop missing Customer~ID]
+        Churn is customer-level. Guest checkouts cannot be tracked across time;
+        keeping them would invent false customers and corrupt labels.
+  \item[Drop cancellations (\texttt{C}-invoices)]
+        Cancellations are not completed purchases. Including them would inflate
+        activity and confuse repurchase detection in the prediction window.
+  \item[Drop non-positive quantity/price]
+        Invalid or adjustment lines are not reliable sales evidence.
+  \item[Drop exact duplicates]
+        Identical duplicate rows are recording artifacts, not extra purchases.
+  \item[Observation = 2010-01-01 to 2010-12-31]
+        A full calendar year of behaviour inside the dataset span, leaving a
+        clear future window for labels.
+  \item[Prediction = 2011-01-01 to 2011-06-30]
+        A six-month forward horizon is long enough to observe repurchase and
+        still fits within data ending 2011-12.
+  \item[Binary temporal churn]
+        Matches ``Will this active customer return next period?'' Features use
+        only observation-period information; the future window is used only for
+        the label (leakage-aware design).
+\end{description}
+
+\subsection{Likely viva questions (Member~1)}
+\begin{itemize}
+  \item Why not impute Customer~ID instead of dropping?
+  \item Why six months for prediction rather than three or twelve?
+  \item How do you know \texttt{obs\_*} fields do not leak future data?
+  \item What if Member~2 wants a different churn threshold?
+\end{itemize}
+
+\subsection{Still outstanding for full faculty DoD}
+\begin{itemize}
+  \item Git feature branch \texttt{feature/member-1-preprocessing} and commits
+        (not yet in repository history).
+  \item Screenshots / demo packaging in \texttt{docs/m1\_faculty\_evidence.md}.
+\end{itemize}
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{Member~2 --- EDA \& Feature Engineering}
+\label{sec:m2}
+% -----------------------------------------------------------------------------
+
+\subsection{Role summary}
+Consume M1's customer-level dataset (and cleaned transactions as needed),
+perform EDA, engineer RFM and behavioural features, and hand a modelling-ready
+feature table to Member~3 --- \textbf{without silently redefining churn labels}.
+
+\subsection{What has been done \done{}}
+\begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
+\hline
+\textbf{Status} & \textbf{Work item} \\
+\hline
+\done{} & Load and validate M1 \texttt{customer\_churn\_labels} \\
+\hline
+\done{} & Customer / churn distribution analysis \\
+\hline
+\done{} & EDA visualisations in \texttt{data/features/figures/} \\
+\hline
+\done{} & RFM features (Recency, Frequency, Monetary) \\
+\hline
+\done{} & Behavioural features (AOV, purchase interval, product diversity, cancellation rate, spending/order trends) \\
+\hline
+\done{} & Feature distribution checks, missing values, outlier review \\
+\hline
+\done{} & Feature dictionary + \texttt{data/features/customer\_features.parquet} \\
+\hline
+\end{tabular}
+
+\paragraph{Key results.}
+4{,}231 customers; churn unchanged (2{,}217 / 2{,}014); validation
+\texttt{all\_passed=true}. Strongest correlations with churn: recency
+($+0.31$), product diversity ($-0.29$), frequency ($-0.27$).
+
+\paragraph{Primary artifacts.}
+\begin{itemize}
+  \item \texttt{src/features.py}, \texttt{notebooks/m2\_eda\_features.ipynb}
+  \item \texttt{data/features/customer\_features.parquet}
+  \item \texttt{docs/feature\_dictionary.md}, \texttt{docs/m2\_eda\_findings.md}
+  \item \texttt{data/features/m2\_validation\_report.json}
+\end{itemize}
+
+\subsection{How it was done}
+\begin{enumerate}
+  \item Validated M1 handoff against \texttt{m1\_validation\_report.json}.
+  \item Aggregated \texttt{transactions\_cleaned.parquet} using
+        \textbf{observation-period dates only}.
+  \item Computed RFM relative to 2010-12-31.
+  \item Built behavioural features; cancellation rate from \textbf{raw}
+        \texttt{C}-invoices in the observation window.
+  \item Imputed purchase interval for single-purchase customers (median);
+        flagged with \texttt{purchase\_interval\_imputed}.
+  \item Reported IQR outliers without deleting rows; exported figures and
+        feature table via \texttt{python -m src.features}.
+\end{enumerate}
+
+\subsection{Why these methods were chosen}
+\begin{description}
+  \item[RFM features]
+        Standard, interpretable retail behavioural summary; strongly related to
+        repurchase likelihood.
+  \item[Observation-only feature windows]
+        Prevents target leakage from the prediction period.
+  \item[Keep M1 churn labels fixed]
+        Sequential ownership and faculty verifiability
+        (\texttt{churn\_unchanged: true}).
+  \item[Cancellation rate from raw data]
+        Cleaned parquet excludes \texttt{C}-invoices; raw data is required to
+        measure cancellation behaviour.
+  \item[Retain outliers]
+        Preserves churn base rates; tree models tolerate skew; M3 may scale.
+  \item[EDA before modelling]
+        Surfaces skew and associations before Member~3 trains models.
+\end{description}
+
+\subsection{Likely viva questions (Member~2)}
+\begin{itemize}
+  \item Define Recency, Frequency, and Monetary for this project.
+  \item How do you stop leakage from the prediction period?
+  \item Which features look most associated with churn?
+        (Recency positive; frequency and product diversity negative.)
+\end{itemize}
+
+\subsection{Still outstanding}
+\begin{itemize}
+  \item Commit M2 artifacts to GitHub (working tree currently uncommitted).
+\end{itemize}
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{Member~3 --- Machine Learning}
+\label{sec:m3}
+% -----------------------------------------------------------------------------
+
+\subsection{Role summary}
+Build a leakage-aware predictive model: temporal split, imbalance handling,
+train three models, evaluate with agreed metrics, select and save the final
+model and preprocessing pipeline for Member~4.
+
+\subsection{What has been done \done{}}
+\begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
+\hline
+\textbf{Status} & \textbf{Work item} \\
+\hline
+\done{} & Load/validate M2 feature dataset \\
+\hline
+\done{} & Temporal train / validation / test split by \texttt{obs\_last\_purchase} \\
+\hline
+\done{} & Class-imbalance analysis and handling \\
+\hline
+\done{} & Train Logistic Regression, Random Forest, XGBoost \\
+\hline
+\done{} & Evaluate ROC-AUC, PR-AUC, Precision, Recall, F1, Confusion Matrix \\
+\hline
+\done{} & Model comparison; select Random Forest (best val PR-AUC) \\
+\hline
+\done{} & Save model/pipeline under \texttt{models/final\_model.joblib} \\
+\hline
+\end{tabular}
+
+\paragraph{Key results (actual).}
+Temporal sizes: train 1{,}173 / val 1{,}090 / test 1{,}968.
+Selected \textbf{Random Forest}: val PR-AUC 0.725; test ROC-AUC 0.755,
+PR-AUC 0.625, Precision 0.646, Recall 0.494, F1 0.560.
+
+\paragraph{Primary artifacts.}
+\begin{itemize}
+  \item \texttt{src/modeling.py}, \texttt{notebooks/m3\_modeling.ipynb}
+  \item \texttt{models/final\_model.joblib}, \texttt{final\_bundle.joblib}
+  \item \texttt{models/model\_comparison.json}, \texttt{model\_metrics.json}
+  \item \texttt{docs/experiment\_notes.md}
+\end{itemize}
+
+\subsection{How it was done}
+\begin{enumerate}
+  \item Validated M2 handoff; confirmed no prediction-period feature columns.
+  \item Split by last observation-period purchase:
+        train $\le$ 2010-08-31; val Sep--Oct 2010; test $\ge$ 2010-11-01.
+  \item Built sklearn \texttt{Pipeline}: median impute + scale numerics;
+        one-hot \texttt{country}; classifier.
+  \item Imbalance: \texttt{class\_weight='balanced'} (LR/RF);
+        XGBoost \texttt{scale\_pos\_weight}=n\_neg/n\_pos on train.
+  \item Selected by highest validation PR-AUC; froze test metrics for that model.
+\end{enumerate}
+
+\subsection{Why these methods were chosen}
+\begin{description}
+  \item[Temporal split on last purchase]
+        Avoids random mixing of early/late cohorts under a fixed observation window.
+  \item[Multiple model families]
+        Fair baseline vs tree/boosting comparison with documented evidence.
+  \item[PR-AUC selection]
+        Emphasises ranking quality on the churn class under cohort shift.
+  \item[Pipeline persistence]
+        Ensures Member~4 loads the same preprocess + model used in evaluation.
+\end{description}
+
+\subsection{Likely viva questions (Member~3)}
+\begin{itemize}
+  \item Why not only accuracy?
+  \item How did you prevent temporal leakage?
+  \item Why Random Forest (cite val PR-AUC vs LR/XGB)?
+\end{itemize}
+
+\subsection{Still outstanding}
+\begin{itemize}
+  \item Commit M3 artifacts to GitHub.
+\end{itemize}
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{Member~4 --- Explainable AI \& Deployment}
+\label{sec:m4}
+% -----------------------------------------------------------------------------
+
+\subsection{Role summary}
+Explain the final M3 model with SHAP, support findings with statistical
+analysis, and deliver a Streamlit application for interactive demonstration.
+
+\subsection{What is planned / done}
+\begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
+\hline
+\textbf{Status} & \textbf{Work item} \\
+\hline
+\planned{} & Load final M3 model (and pipeline) \\
+\hline
+\planned{} & Global SHAP feature importance \\
+\hline
+\planned{} & Local / per-customer SHAP explanations \\
+\hline
+\planned{} & Statistical tests / hypothesis analysis \\
+\hline
+\planned{} & Streamlit UI: customer info, probability, risk, top factors, SHAP \\
+\hline
+\planned{} & Integration testing and deployment documentation \\
+\hline
+\end{tabular}
+
+\subsection{How it will be done (agreed method)}
+\begin{enumerate}
+  \item Load the \textbf{exact} final artifact from \texttt{models/}.
+  \item Choose a SHAP explainer compatible with the final model
+        (e.g.\ TreeExplainer for tree/boosting models).
+  \item Produce global summaries and local explanations for selected customers.
+  \item Run documented statistical tests on key feature--churn relationships.
+  \item Build Streamlit under \texttt{app/}: select/input customer $\rightarrow$
+        preprocess $\rightarrow$ predict $\rightarrow$ show risk + SHAP drivers.
+\end{enumerate}
+
+\subsection{Why these methods are chosen}
+\begin{description}
+  \item[SHAP]
+        Unified attribution for global and local explanations; suitable for
+        faculty demonstration and business trust.
+  \item[Statistical analysis alongside SHAP]
+        SHAP explains the model; tests support whether relationships appear in
+        the data.
+  \item[Streamlit]
+        Fast interactive demo for viva walkthroughs.
+  \item[Use M3's final model only]
+        Explanations and deployment must match reported metrics.
+\end{description}
+
+\subsection{Likely viva questions (Member~4)}
+\begin{itemize}
+  \item Difference between global and local explanation?
+  \item What does a high SHAP value mean for a feature?
+  \item How does the app avoid using prediction-period inputs?
+\end{itemize}
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{End-to-End Method Narrative (How the Project Is Done)}
+% -----------------------------------------------------------------------------
+
+Use this short storyline in proposal / viva introductions:
+
+\begin{enumerate}
+  \item \textbf{Data foundation (M1).}
+        Start from UCI Online Retail~II invoices. Clean identity, cancellations,
+        invalid lines, and duplicates. Define a past observation window and a
+        future prediction window. Label churn as non-repurchase in the future
+        window among customers active in the past window.
+  \item \textbf{Behavioural representation (M2).}
+        Summarise each customer's observation-period behaviour with RFM and
+        related features so the model sees patterns, not raw invoice rows.
+  \item \textbf{Prediction (M3).}
+        Train multiple classifiers under a temporal protocol, handle imbalance,
+        and select the best evidenced model.
+  \item \textbf{Trust \& delivery (M4).}
+        Explain why the model predicts churn (SHAP + statistics) and ship an
+        interactive Streamlit demo.
+\end{enumerate}
+
+\subsubsection*{Pipeline (textual)}
+\begin{verbatim}
+Online Retail II
+  -> Cleaning & filtering
+  -> Observation / prediction periods
+  -> Churn labels (customer-level)
+  -> EDA & feature engineering
+  -> Temporal split & imbalance handling
+  -> LR / RF / XGBoost + evaluation
+  -> SHAP + statistical analysis
+  -> Streamlit deployment
+  -> Final documentation
+\end{verbatim}
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{Contribution Matrix (Quick Viva Reference)}
+% -----------------------------------------------------------------------------
+
+\begin{tabular}{|p{0.14\textwidth}|p{0.2\textwidth}|p{0.3\textwidth}|p{0.24\textwidth}|}
+\hline
+\textbf{Member} & \textbf{Owns} & \textbf{Key method} & \textbf{Why} \\
+\hline
+Member~1 & Labels \& cleaned data & Temporal churn windows + cleaning rules & Leakage-aware, valid customer labels \\
+\hline
+Member~2 & Features \& EDA & RFM + behavioural feats from observation only & Interpretable, no target leakage \\
+\hline
+Member~3 & Models \& metrics & Temporal split; LR/RF/XGB; multi-metric eval & Fair comparison, realistic performance \\
+\hline
+Member~4 & XAI \& app & SHAP + stats + Streamlit & Explainability and demo \\
+\hline
+\end{tabular}
+
+\vspace{1em}
+\noindent\textbf{Evidence habit:} When answering ``What did you do?'', cite a
+file path, a metric, or a commit --- not only a verbal claim.
+
+\newpage
+% -----------------------------------------------------------------------------
+\section{How to Maintain This File}
+% -----------------------------------------------------------------------------
+
+\begin{enumerate}
+  \item After a module finishes, change \planned{} to \done{} for that member.
+  \item Paste key numbers, file paths, and (when available) commit hashes.
+  \item Sync claims with \texttt{PROGRESS.md}; never invent completed work.
+  \item Add new Decision Log items into the member's ``Why'' subsection.
+  \item Recompile: \texttt{pdflatex viva.tex} (twice if the TOC changes).
+\end{enumerate}
+
+\subsection{Update log}
+\begin{tabular}{|l|l|p{0.55\textwidth}|}
+\hline
+\textbf{Date} & \textbf{Who} & \textbf{Change} \\
+\hline
+2026-09-25 & Team & Initial \texttt{viva.tex}: M1 what/how/why from repository evidence; M2--M4 planned methods from \texttt{PLAN.md}. \\
+\hline
+2026-09-25 & Team & M2 section updated to \done{} with RFM/behavioural results, leakage controls, and artifact paths. \\
+\hline
+2026-09-28 & Team & M3 section updated to \done{}: temporal split, LR/RF/XGB results, Random Forest selected. \\
+\hline
+\end{tabular}
+
+\end{document}
