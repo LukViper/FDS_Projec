@@ -1,0 +1,43 @@
+feature,mean_abs_shap
+num__monetary,0.028783020582630527
+num__frequency,0.023311637327066453
+num__avg_order_value,0.022305989657712452
+num__spending_trend,0.01834484155686001
+num__avg_line_quantity,0.013297913422173518
+num__obs_n_lines,0.012863976416015225
+num__product_diversity,0.01209282763817303
+num__order_trend,0.009354967324170276
+num__recency_days,0.008386874221541225
+num__purchase_interval_imputed,0.008371445039805905
+num__purchase_interval_days,0.006805251489184541
+num__cancellation_rate,0.002445551662156834
+cat__country_United Kingdom,0.0010692360897106231
+cat__country_Germany,0.00020794057403320036
+cat__country_Netherlands,6.204183520167133e-05
+cat__country_Spain,5.9586076909908965e-05
+cat__country_Portugal,3.6747558030183455e-05
+cat__country_France,3.5571676949039056e-05
+cat__country_Cyprus,0.0
+cat__country_Channel Islands,0.0
+cat__country_EIRE,0.0
+cat__country_Denmark,0.0
+cat__country_Bahrain,0.0
+cat__country_Belgium,0.0
+cat__country_Australia,0.0
+cat__country_Austria,0.0
+cat__country_Italy,0.0
+cat__country_Israel,0.0
+cat__country_Greece,0.0
+cat__country_Finland,0.0
+cat__country_Nigeria,0.0
+cat__country_Malta,0.0
+cat__country_Norway,0.0
+cat__country_Japan,0.0
+cat__country_RSA,0.0
+cat__country_Sweden,0.0
+cat__country_Thailand,0.0
+cat__country_Switzerland,0.0
+cat__country_USA,0.0
+cat__country_United Arab Emirates,0.0
+cat__country_Unspecified,0.0
+cat__country_West Indies,0.0

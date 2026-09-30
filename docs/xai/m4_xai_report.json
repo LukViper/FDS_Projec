@@ -1,0 +1,93 @@
+{
+  "m3_handoff_validation": {
+    "final_model_exists": true,
+    "selected_model_in_comparison": "random_forest",
+    "pipeline_steps": [
+      "preprocess",
+      "model"
+    ],
+    "model_class": "RandomForestClassifier",
+    "is_random_forest": true,
+    "matches_selected_rf": true,
+    "all_passed": true
+  },
+  "model_loaded": "models/final_model.joblib",
+  "selected_model": "random_forest",
+  "model_class": "RandomForestClassifier",
+  "shap_sample_size": 500,
+  "global_importance_top10": [
+    {
+      "feature": "num__monetary",
+      "mean_abs_shap": 0.028783020582630527
+    },
+    {
+      "feature": "num__frequency",
+      "mean_abs_shap": 0.023311637327066453
+    },
+    {
+      "feature": "num__avg_order_value",
+      "mean_abs_shap": 0.022305989657712452
+    },
+    {
+      "feature": "num__spending_trend",
+      "mean_abs_shap": 0.01834484155686001
+    },
+    {
+      "feature": "num__avg_line_quantity",
+      "mean_abs_shap": 0.013297913422173518
+    },
+    {
+      "feature": "num__obs_n_lines",
+      "mean_abs_shap": 0.012863976416015225
+    },
+    {
+      "feature": "num__product_diversity",
+      "mean_abs_shap": 0.01209282763817303
+    },
+    {
+      "feature": "num__order_trend",
+      "mean_abs_shap": 0.009354967324170276
+    },
+    {
+      "feature": "num__recency_days",
+      "mean_abs_shap": 0.008386874221541225
+    },
+    {
+      "feature": "num__purchase_interval_imputed",
+      "mean_abs_shap": 0.008371445039805905
+    }
+  ],
+  "figures": [
+    "docs/xai/figures/shap_global_importance.png",
+    "docs/xai/figures/shap_summary.png"
+  ],
+  "statistical_summary": {
+    "alpha": 0.05,
+    "n_significant_numeric": 12,
+    "significant_numeric_features": [
+      "frequency",
+      "monetary",
+      "obs_n_lines",
+      "purchase_interval_imputed",
+      "product_diversity",
+      "recency_days",
+      "cancellation_rate",
+      "avg_order_value",
+      "purchase_interval_days",
+      "avg_line_quantity",
+      "order_trend",
+      "spending_trend"
+    ],
+    "country_significant": true
+  },
+  "outputs": {
+    "shap_global_importance_csv": "docs/xai/shap_global_importance.csv",
+    "shap_local_examples_json": "docs/xai/shap_local_examples.json",
+    "statistical_tests_json": "docs/xai/statistical_tests.json"
+  },
+  "risk_thresholds": {
+    "low_lt": 0.33,
+    "high_gte": 0.66
+  },
+  "note": "Explanations use the frozen M3 final_model.joblib; model was not retrained."
+}

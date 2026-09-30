@@ -1,0 +1,297 @@
+[
+  {
+    "prediction": {
+      "Customer ID": 16165,
+      "churn_probability": 0.8257885441040423,
+      "risk_category": "High",
+      "actual_churn_label": 1,
+      "country": "United Kingdom"
+    },
+    "top_factors": [
+      {
+        "feature": "num__monetary",
+        "shap_value": 0.09509771736776201,
+        "abs_shap": 0.09509771736776201,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__avg_order_value",
+        "shap_value": 0.08468007205535741,
+        "abs_shap": 0.08468007205535741,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__product_diversity",
+        "shap_value": 0.05560559733105947,
+        "abs_shap": 0.05560559733105947,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__obs_n_lines",
+        "shap_value": 0.04502355182674307,
+        "abs_shap": 0.04502355182674307,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__frequency",
+        "shap_value": 0.033681011451626545,
+        "abs_shap": 0.033681011451626545,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__purchase_interval_imputed",
+        "shap_value": 0.01722783992237055,
+        "abs_shap": 0.01722783992237055,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__avg_line_quantity",
+        "shap_value": 0.009937324822535629,
+        "abs_shap": 0.009937324822535629,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__recency_days",
+        "shap_value": 0.008536149886899692,
+        "abs_shap": 0.008536149886899692,
+        "direction": "increases_churn"
+      }
+    ]
+  },
+  {
+    "prediction": {
+      "Customer ID": 13380,
+      "churn_probability": 0.8138826587604016,
+      "risk_category": "High",
+      "actual_churn_label": 1,
+      "country": "United Kingdom"
+    },
+    "top_factors": [
+      {
+        "feature": "num__monetary",
+        "shap_value": 0.10436639067855821,
+        "abs_shap": 0.10436639067855821,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__avg_order_value",
+        "shap_value": 0.0935178403261284,
+        "abs_shap": 0.0935178403261284,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__product_diversity",
+        "shap_value": 0.047566400257919667,
+        "abs_shap": 0.047566400257919667,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__obs_n_lines",
+        "shap_value": 0.03853157354023892,
+        "abs_shap": 0.03853157354023892,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__frequency",
+        "shap_value": 0.03433128530381055,
+        "abs_shap": 0.03433128530381055,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__purchase_interval_imputed",
+        "shap_value": 0.018338256900710802,
+        "abs_shap": 0.018338256900710802,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__spending_trend",
+        "shap_value": 0.010243551754451801,
+        "abs_shap": 0.010243551754451801,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__order_trend",
+        "shap_value": 0.009806357670897796,
+        "abs_shap": 0.009806357670897796,
+        "direction": "increases_churn"
+      }
+    ]
+  },
+  {
+    "prediction": {
+      "Customer ID": 13469,
+      "churn_probability": 0.8109609484309355,
+      "risk_category": "High",
+      "actual_churn_label": 1,
+      "country": "United Kingdom"
+    },
+    "top_factors": [
+      {
+        "feature": "num__monetary",
+        "shap_value": 0.08498271594175776,
+        "abs_shap": 0.08498271594175776,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__avg_order_value",
+        "shap_value": 0.06991818896909308,
+        "abs_shap": 0.06991818896909308,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__product_diversity",
+        "shap_value": 0.05203978777180396,
+        "abs_shap": 0.05203978777180396,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__obs_n_lines",
+        "shap_value": 0.043675237989961035,
+        "abs_shap": 0.043675237989961035,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__frequency",
+        "shap_value": 0.0365631099077541,
+        "abs_shap": 0.0365631099077541,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__recency_days",
+        "shap_value": 0.030751093766384657,
+        "abs_shap": 0.030751093766384657,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__purchase_interval_imputed",
+        "shap_value": 0.02388084778115626,
+        "abs_shap": 0.02388084778115626,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__purchase_interval_days",
+        "shap_value": 0.005089007046040024,
+        "abs_shap": 0.005089007046040024,
+        "direction": "increases_churn"
+      }
+    ]
+  },
+  {
+    "prediction": {
+      "Customer ID": 15131,
+      "churn_probability": 0.808835045119258,
+      "risk_category": "High",
+      "actual_churn_label": 1,
+      "country": "United Kingdom"
+    },
+    "top_factors": [
+      {
+        "feature": "num__monetary",
+        "shap_value": 0.09892616680382389,
+        "abs_shap": 0.09892616680382389,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__avg_order_value",
+        "shap_value": 0.08034249104162655,
+        "abs_shap": 0.08034249104162655,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__product_diversity",
+        "shap_value": 0.051708092850460616,
+        "abs_shap": 0.051708092850460616,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__obs_n_lines",
+        "shap_value": 0.04613314121174767,
+        "abs_shap": 0.04613314121174767,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__frequency",
+        "shap_value": 0.036393533991799815,
+        "abs_shap": 0.036393533991799815,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__purchase_interval_imputed",
+        "shap_value": 0.019500853163021928,
+        "abs_shap": 0.019500853163021928,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__order_trend",
+        "shap_value": 0.009587918084687317,
+        "abs_shap": 0.009587918084687317,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__spending_trend",
+        "shap_value": 0.009476390880713552,
+        "abs_shap": 0.009476390880713552,
+        "direction": "increases_churn"
+      }
+    ]
+  },
+  {
+    "prediction": {
+      "Customer ID": 14576,
+      "churn_probability": 0.7976780103164114,
+      "risk_category": "High",
+      "actual_churn_label": 1,
+      "country": "United Kingdom"
+    },
+    "top_factors": [
+      {
+        "feature": "num__monetary",
+        "shap_value": 0.0929206100677743,
+        "abs_shap": 0.0929206100677743,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__avg_order_value",
+        "shap_value": 0.07945217018802168,
+        "abs_shap": 0.07945217018802168,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__product_diversity",
+        "shap_value": 0.04901781452723981,
+        "abs_shap": 0.04901781452723981,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__obs_n_lines",
+        "shap_value": 0.043516099678730595,
+        "abs_shap": 0.043516099678730595,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__frequency",
+        "shap_value": 0.03449894699494052,
+        "abs_shap": 0.03449894699494052,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__purchase_interval_imputed",
+        "shap_value": 0.01971579836961155,
+        "abs_shap": 0.01971579836961155,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__spending_trend",
+        "shap_value": 0.011670250547072101,
+        "abs_shap": 0.011670250547072101,
+        "direction": "increases_churn"
+      },
+      {
+        "feature": "num__order_trend",
+        "shap_value": 0.011458956966960159,
+        "abs_shap": 0.011458956966960159,
+        "direction": "increases_churn"
+      }
+    ]
+  }
+]

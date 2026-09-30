@@ -1,3 +1,3 @@
 """Customer Churn Prediction — shared source package."""
 
-__all__ = ["preprocessing", "features"]
+__all__ = ["preprocessing", "features", "modeling", "explain"]

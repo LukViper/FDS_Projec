@@ -121,19 +121,18 @@ SHAP, Streamlit.
 \hline
 \textbf{Module} & \textbf{Owner} & \textbf{Status} \\
 \hline
-M1 Data \& Preprocessing & Member~1 & Implementation \done{}; Git branch/commits pending \\
+M1 Data \& Preprocessing & Member~1 & \done{} (commit \texttt{c9d5a74} on \texttt{Shasank}) \\
 \hline
-M2 EDA \& Features & Member~2 & \planned{} --- not started \\
+M2 EDA \& Features & Member~2 & Implementation \done{}; git commit pending \\
 \hline
-M3 Machine Learning & Member~3 & \planned{} --- not started \\
+M3 Machine Learning & Member~3 & Implementation \done{} (RF selected); git commit pending \\
 \hline
-M4 XAI \& Deployment & Member~4 & \planned{} --- not started \\
+M4 XAI \& Deployment & Member~4 & Implementation \done{} (SHAP + Streamlit); git commit pending \\
 \hline
 \end{tabular}
 
 \vspace{0.6em}
-\noindent\textit{Do not claim M2--M4 as completed in a viva until
-\texttt{PROGRESS.md} shows repository evidence.}
+\noindent\textit{Flip git-commit items to done in \texttt{PROGRESS.md} when pushes are verified.}
 
 \newpage
 % -----------------------------------------------------------------------------
@@ -266,66 +265,84 @@ Consume M1's customer-level dataset (and cleaned transactions as needed),
 perform EDA, engineer RFM and behavioural features, and hand a modelling-ready
 feature table to Member~3 --- \textbf{without silently redefining churn labels}.
 
-\subsection{What is planned / done}
+\subsection{What has been done \done{}}
 \begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
 \hline
 \textbf{Status} & \textbf{Work item} \\
 \hline
-\planned{} & Load and validate M1 \texttt{customer\_churn\_labels} \\
+\done{} & Load and validate M1 \texttt{customer\_churn\_labels} \\
 \hline
-\planned{} & Customer / churn distribution analysis \\
+\done{} & Customer / churn distribution analysis \\
 \hline
-\planned{} & EDA visualisations \\
+\done{} & EDA visualisations in \texttt{data/features/figures/} \\
 \hline
-\planned{} & RFM features (Recency, Frequency, Monetary) \\
+\done{} & RFM features (Recency, Frequency, Monetary) \\
 \hline
-\planned{} & Behavioural features (AOV, purchase interval, product diversity, cancellation rate, spending/order trends, etc.) \\
+\done{} & Behavioural features (AOV, purchase interval, product diversity, cancellation rate, spending/order trends) \\
 \hline
-\planned{} & Feature distribution checks, missing values, outlier review \\
+\done{} & Feature distribution checks, missing values, outlier review \\
 \hline
-\planned{} & Feature dictionary + \texttt{data/features/} artifact \\
+\done{} & Feature dictionary + \texttt{data/features/customer\_features.parquet} \\
 \hline
 \end{tabular}
 
-\vspace{0.5em}
-\noindent\textit{Update rows to \done{} with paths and figures when M2 finishes.}
+\paragraph{Key results.}
+4{,}231 customers; churn unchanged (2{,}217 / 2{,}014); validation
+\texttt{all\_passed=true}. Strongest correlations with churn: recency
+($+0.31$), product diversity ($-0.29$), frequency ($-0.27$).
 
-\subsection{How it will be done (agreed method)}
+\paragraph{Primary artifacts.}
+\begin{itemize}
+  \item \texttt{src/features.py}, \texttt{notebooks/m2\_eda\_features.ipynb}
+  \item \texttt{data/features/customer\_features.parquet}
+  \item \texttt{docs/feature\_dictionary.md}, \texttt{docs/m2\_eda\_findings.md}
+  \item \texttt{data/features/m2\_validation\_report.json}
+\end{itemize}
+
+\subsection{How it was done}
 \begin{enumerate}
-  \item Load \texttt{data/processed/customer\_churn\_labels.parquet}; verify
-        row count, churn rate, and schema against
-        \texttt{m1\_validation\_report.json}.
-  \item Aggregate from \texttt{transactions\_cleaned.parquet} using
-        \textbf{observation-period dates only} when building features.
-  \item Compute RFM relative to the end of the observation period
-        (2010-12-31), not ``today''.
-  \item Create behavioural features listed in \texttt{PLAN.md}.
-  \item Document distributions, missingness, and outlier handling.
-  \item Save engineered dataset under \texttt{data/features/} and document
-        definitions in \texttt{docs/}.
+  \item Validated M1 handoff against \texttt{m1\_validation\_report.json}.
+  \item Aggregated \texttt{transactions\_cleaned.parquet} using
+        \textbf{observation-period dates only}.
+  \item Computed RFM relative to 2010-12-31.
+  \item Built behavioural features; cancellation rate from \textbf{raw}
+        \texttt{C}-invoices in the observation window.
+  \item Imputed purchase interval for single-purchase customers (median);
+        flagged with \texttt{purchase\_interval\_imputed}.
+  \item Reported IQR outliers without deleting rows; exported figures and
+        feature table via \texttt{python -m src.features}.
 \end{enumerate}
 
-\subsection{Why these methods are chosen}
+\subsection{Why these methods were chosen}
 \begin{description}
   \item[RFM features]
         Standard, interpretable retail behavioural summary; strongly related to
-        repurchase likelihood and easy to explain in viva.
+        repurchase likelihood.
   \item[Observation-only feature windows]
-        Prevents target leakage: using prediction-period purchases as features
-        would invalidate metrics.
+        Prevents target leakage from the prediction period.
   \item[Keep M1 churn labels fixed]
-        Sequential ownership and faculty verifiability; label changes require a
-        Decision Log entry.
+        Sequential ownership and faculty verifiability
+        (\texttt{churn\_unchanged: true}).
+  \item[Cancellation rate from raw data]
+        Cleaned parquet excludes \texttt{C}-invoices; raw data is required to
+        measure cancellation behaviour.
+  \item[Retain outliers]
+        Preserves churn base rates; tree models tolerate skew; M3 may scale.
   \item[EDA before modelling]
-        Surfaces class imbalance and skewed distributions before Member~3 trains
-        models.
+        Surfaces skew and associations before Member~3 trains models.
 \end{description}
 
 \subsection{Likely viva questions (Member~2)}
 \begin{itemize}
   \item Define Recency, Frequency, and Monetary for this project.
   \item How do you stop leakage from the prediction period?
-  \item Which features look most associated with churn (after results exist)?
+  \item Which features look most associated with churn?
+        (Recency positive; frequency and product diversity negative.)
+\end{itemize}
+
+\subsection{Still outstanding}
+\begin{itemize}
+  \item Commit M2 artifacts to GitHub (working tree currently uncommitted).
 \end{itemize}
 
 \newpage
@@ -339,61 +356,74 @@ Build a leakage-aware predictive model: temporal split, imbalance handling,
 train three models, evaluate with agreed metrics, select and save the final
 model and preprocessing pipeline for Member~4.
 
-\subsection{What is planned / done}
+\subsection{What has been done \done{}}
 \begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
 \hline
 \textbf{Status} & \textbf{Work item} \\
 \hline
-\planned{} & Load/validate M2 feature dataset \\
+\done{} & Load/validate M2 feature dataset \\
 \hline
-\planned{} & Temporal train / validation / test split \\
+\done{} & Temporal train / validation / test split by \texttt{obs\_last\_purchase} \\
 \hline
-\planned{} & Class-imbalance analysis and handling \\
+\done{} & Class-imbalance analysis and handling \\
 \hline
-\planned{} & Train Logistic Regression, Random Forest, XGBoost \\
+\done{} & Train Logistic Regression, Random Forest, XGBoost \\
 \hline
-\planned{} & Evaluate ROC-AUC, PR-AUC, Precision, Recall, F1, Confusion Matrix \\
+\done{} & Evaluate ROC-AUC, PR-AUC, Precision, Recall, F1, Confusion Matrix \\
 \hline
-\planned{} & Model comparison and final selection with documented rationale \\
+\done{} & Model comparison; select Random Forest (best val PR-AUC) \\
 \hline
-\planned{} & Save model (and pipeline) under \texttt{models/} \\
+\done{} & Save model/pipeline under \texttt{models/final\_model.joblib} \\
 \hline
 \end{tabular}
 
-\subsection{How it will be done (agreed method)}
+\paragraph{Key results (actual).}
+Temporal sizes: train 1{,}173 / val 1{,}090 / test 1{,}968.
+Selected \textbf{Random Forest}: val PR-AUC 0.725; test ROC-AUC 0.755,
+PR-AUC 0.625, Precision 0.646, Recall 0.494, F1 0.560.
+
+\paragraph{Primary artifacts.}
+\begin{itemize}
+  \item \texttt{src/modeling.py}, \texttt{notebooks/m3\_modeling.ipynb}
+  \item \texttt{models/final\_model.joblib}, \texttt{final\_bundle.joblib}
+  \item \texttt{models/model\_comparison.json}, \texttt{model\_metrics.json}
+  \item \texttt{docs/experiment\_notes.md}
+\end{itemize}
+
+\subsection{How it was done}
 \begin{enumerate}
-  \item Use a \textbf{temporal} split (not a random shuffle that mixes future
-        behaviour into training).
-  \item Analyse class prevalence; apply an explicit imbalance strategy
-        (class weights, resampling, and/or threshold tuning) and record it.
-  \item Train Logistic Regression (interpretable baseline), Random Forest
-        (non-linear bagging), and XGBoost (strong tabular booster, SHAP-friendly).
-  \item Compare on validation metrics; report the frozen test-set result for the
-        chosen model.
-  \item Persist artifacts for M4 under \texttt{models/}.
+  \item Validated M2 handoff; confirmed no prediction-period feature columns.
+  \item Split by last observation-period purchase:
+        train $\le$ 2010-08-31; val Sep--Oct 2010; test $\ge$ 2010-11-01.
+  \item Built sklearn \texttt{Pipeline}: median impute + scale numerics;
+        one-hot \texttt{country}; classifier.
+  \item Imbalance: \texttt{class\_weight='balanced'} (LR/RF);
+        XGBoost \texttt{scale\_pos\_weight}=n\_neg/n\_pos on train.
+  \item Selected by highest validation PR-AUC; froze test metrics for that model.
 \end{enumerate}
 
-\subsection{Why these methods are chosen}
+\subsection{Why these methods were chosen}
 \begin{description}
-  \item[Temporal split]
-        Random splits can leak future behaviour and overstate churn performance.
+  \item[Temporal split on last purchase]
+        Avoids random mixing of early/late cohorts under a fixed observation window.
   \item[Multiple model families]
-        Shows whether gains come from non-linearity/boosting versus a simple
-        baseline.
-  \item[ROC-AUC and PR-AUC together]
-        ROC-AUC alone can look optimistic under imbalance; PR-AUC focuses on the
-        churn class.
-  \item[Precision, Recall, F1, Confusion Matrix]
-        Connect metrics to false alarms versus missed churners.
-  \item[Save the actual final model]
-        Member~4 must explain and deploy the same model that was selected.
+        Fair baseline vs tree/boosting comparison with documented evidence.
+  \item[PR-AUC selection]
+        Emphasises ranking quality on the churn class under cohort shift.
+  \item[Pipeline persistence]
+        Ensures Member~4 loads the same preprocess + model used in evaluation.
 \end{description}
 
 \subsection{Likely viva questions (Member~3)}
 \begin{itemize}
   \item Why not only accuracy?
   \item How did you prevent temporal leakage?
-  \item Why was the final model selected (cite your experiment table)?
+  \item Why Random Forest (cite val PR-AUC vs LR/XGB)?
+\end{itemize}
+
+\subsection{Still outstanding}
+\begin{itemize}
+  \item Commit M3 artifacts to GitHub.
 \end{itemize}
 
 \newpage
@@ -406,48 +436,58 @@ model and preprocessing pipeline for Member~4.
 Explain the final M3 model with SHAP, support findings with statistical
 analysis, and deliver a Streamlit application for interactive demonstration.
 
-\subsection{What is planned / done}
+\subsection{What has been done \done{}}
 \begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
 \hline
 \textbf{Status} & \textbf{Work item} \\
 \hline
-\planned{} & Load final M3 model (and pipeline) \\
+\done{} & Load final M3 model (\texttt{models/final\_model.joblib}) \\
 \hline
-\planned{} & Global SHAP feature importance \\
+\done{} & Global SHAP feature importance \\
 \hline
-\planned{} & Local / per-customer SHAP explanations \\
+\done{} & Local / per-customer SHAP explanations \\
 \hline
-\planned{} & Statistical tests / hypothesis analysis \\
+\done{} & Statistical tests (Mann--Whitney, point-biserial, chi-square) \\
 \hline
-\planned{} & Streamlit UI: customer info, probability, risk, top factors, SHAP \\
+\done{} & Streamlit UI: info, probability, risk, top factors, SHAP \\
 \hline
-\planned{} & Integration testing and deployment documentation \\
+\done{} & Integration testing smoke path + deployment docs \\
 \hline
 \end{tabular}
 
-\subsection{How it will be done (agreed method)}
+\paragraph{Key results.}
+Frozen Random Forest explained with TreeExplainer. Top global drivers include
+monetary, frequency, and average order value. All 12 numeric features
+significant vs churn at $\alpha=0.05$; country also significant.
+
+\paragraph{Primary artifacts.}
+\begin{itemize}
+  \item \texttt{src/explain.py}, \texttt{app/streamlit\_app.py}
+  \item \texttt{notebooks/m4\_shap\_analysis.ipynb}
+  \item \texttt{docs/xai/} (report, figures, stats JSON)
+  \item \texttt{docs/shap\_and\_stats.md}, \texttt{docs/deployment.md}
+\end{itemize}
+
+\subsection{How it was done}
 \begin{enumerate}
-  \item Load the \textbf{exact} final artifact from \texttt{models/}.
-  \item Choose a SHAP explainer compatible with the final model
-        (e.g.\ TreeExplainer for tree/boosting models).
-  \item Produce global summaries and local explanations for selected customers.
-  \item Run documented statistical tests on key feature--churn relationships.
-  \item Build Streamlit under \texttt{app/}: select/input customer $\rightarrow$
-        preprocess $\rightarrow$ predict $\rightarrow$ show risk + SHAP drivers.
+  \item Validated M3 handoff; loaded Pipeline without retraining.
+  \item Computed SHAP on preprocessed features via \texttt{TreeExplainer}.
+  \item Saved global mean $|$SHAP$|$ tables/plots and local examples.
+  \item Ran nonparametric tests relating features to the churn label.
+  \item Built Streamlit app: select/manual customer $\rightarrow$ validate $\rightarrow$
+        predict $\rightarrow$ risk band $\rightarrow$ local SHAP factors.
 \end{enumerate}
 
-\subsection{Why these methods are chosen}
+\subsection{Why these methods were chosen}
 \begin{description}
-  \item[SHAP]
-        Unified attribution for global and local explanations; suitable for
-        faculty demonstration and business trust.
-  \item[Statistical analysis alongside SHAP]
-        SHAP explains the model; tests support whether relationships appear in
-        the data.
+  \item[SHAP TreeExplainer]
+        Compatible with Random Forest; efficient global/local attributions.
+  \item[Statistical tests alongside SHAP]
+        SHAP explains the model; tests support data-level associations.
   \item[Streamlit]
-        Fast interactive demo for viva walkthroughs.
-  \item[Use M3's final model only]
-        Explanations and deployment must match reported metrics.
+        Fast interactive faculty/business demo.
+  \item[Frozen M3 model only]
+        Explanations match reported M3 metrics.
 \end{description}
 
 \subsection{Likely viva questions (Member~4)}
@@ -455,6 +495,11 @@ analysis, and deliver a Streamlit application for interactive demonstration.
   \item Difference between global and local explanation?
   \item What does a high SHAP value mean for a feature?
   \item How does the app avoid using prediction-period inputs?
+\end{itemize}
+
+\subsection{Still outstanding}
+\begin{itemize}
+  \item Commit M4 artifacts to GitHub; record a live Streamlit demo if required.
 \end{itemize}
 
 \newpage
@@ -537,6 +582,12 @@ file path, a metric, or a commit --- not only a verbal claim.
 \textbf{Date} & \textbf{Who} & \textbf{Change} \\
 \hline
 2026-09-25 & Team & Initial \texttt{viva.tex}: M1 what/how/why from repository evidence; M2--M4 planned methods from \texttt{PLAN.md}. \\
+\hline
+2026-09-25 & Team & M2 section updated to \done{} with RFM/behavioural results, leakage controls, and artifact paths. \\
+\hline
+2026-09-28 & Team & M3 section updated to \done{}: temporal split, LR/RF/XGB results, Random Forest selected. \\
+\hline
+2026-09-28 & Team & M4 section updated to \done{}: SHAP TreeExplainer, statistical tests, Streamlit app. \\
 \hline
 \end{tabular}
 

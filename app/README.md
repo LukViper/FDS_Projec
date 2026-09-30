@@ -1,5 +1,11 @@
 # M4 Streamlit application
 
-Streamlit app code for churn prediction demo (customer info, probability, risk, SHAP).
+Interactive churn demo with SHAP explanations.
 
-Entry point to be added when M4 starts (e.g. `streamlit run app.py`).
+```bash
+# from repository root
+streamlit run app/streamlit_app.py
+```
+
+Loads `models/final_model.joblib` (Member 3). Does not retrain.
+See `docs/deployment.md`.
