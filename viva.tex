@@ -127,13 +127,12 @@ M2 EDA \& Features & Member~2 & Implementation \done{}; git commit pending \\
 \hline
 M3 Machine Learning & Member~3 & Implementation \done{} (RF selected); git commit pending \\
 \hline
-M4 XAI \& Deployment & Member~4 & \planned{} --- not started (handoff ready) \\
+M4 XAI \& Deployment & Member~4 & Implementation \done{} (SHAP + Streamlit); git commit pending \\
 \hline
 \end{tabular}
 
 \vspace{0.6em}
-\noindent\textit{Do not claim M4 as completed in a viva until
-\texttt{PROGRESS.md} shows repository evidence.}
+\noindent\textit{Flip git-commit items to done in \texttt{PROGRESS.md} when pushes are verified.}
 
 \newpage
 % -----------------------------------------------------------------------------
@@ -437,48 +436,58 @@ PR-AUC 0.625, Precision 0.646, Recall 0.494, F1 0.560.
 Explain the final M3 model with SHAP, support findings with statistical
 analysis, and deliver a Streamlit application for interactive demonstration.
 
-\subsection{What is planned / done}
+\subsection{What has been done \done{}}
 \begin{tabular}{|p{0.2\textwidth}|p{0.7\textwidth}|}
 \hline
 \textbf{Status} & \textbf{Work item} \\
 \hline
-\planned{} & Load final M3 model (and pipeline) \\
+\done{} & Load final M3 model (\texttt{models/final\_model.joblib}) \\
 \hline
-\planned{} & Global SHAP feature importance \\
+\done{} & Global SHAP feature importance \\
 \hline
-\planned{} & Local / per-customer SHAP explanations \\
+\done{} & Local / per-customer SHAP explanations \\
 \hline
-\planned{} & Statistical tests / hypothesis analysis \\
+\done{} & Statistical tests (Mann--Whitney, point-biserial, chi-square) \\
 \hline
-\planned{} & Streamlit UI: customer info, probability, risk, top factors, SHAP \\
+\done{} & Streamlit UI: info, probability, risk, top factors, SHAP \\
 \hline
-\planned{} & Integration testing and deployment documentation \\
+\done{} & Integration testing smoke path + deployment docs \\
 \hline
 \end{tabular}
 
-\subsection{How it will be done (agreed method)}
+\paragraph{Key results.}
+Frozen Random Forest explained with TreeExplainer. Top global drivers include
+monetary, frequency, and average order value. All 12 numeric features
+significant vs churn at $\alpha=0.05$; country also significant.
+
+\paragraph{Primary artifacts.}
+\begin{itemize}
+  \item \texttt{src/explain.py}, \texttt{app/streamlit\_app.py}
+  \item \texttt{notebooks/m4\_shap\_analysis.ipynb}
+  \item \texttt{docs/xai/} (report, figures, stats JSON)
+  \item \texttt{docs/shap\_and\_stats.md}, \texttt{docs/deployment.md}
+\end{itemize}
+
+\subsection{How it was done}
 \begin{enumerate}
-  \item Load the \textbf{exact} final artifact from \texttt{models/}.
-  \item Choose a SHAP explainer compatible with the final model
-        (e.g.\ TreeExplainer for tree/boosting models).
-  \item Produce global summaries and local explanations for selected customers.
-  \item Run documented statistical tests on key feature--churn relationships.
-  \item Build Streamlit under \texttt{app/}: select/input customer $\rightarrow$
-        preprocess $\rightarrow$ predict $\rightarrow$ show risk + SHAP drivers.
+  \item Validated M3 handoff; loaded Pipeline without retraining.
+  \item Computed SHAP on preprocessed features via \texttt{TreeExplainer}.
+  \item Saved global mean $|$SHAP$|$ tables/plots and local examples.
+  \item Ran nonparametric tests relating features to the churn label.
+  \item Built Streamlit app: select/manual customer $\rightarrow$ validate $\rightarrow$
+        predict $\rightarrow$ risk band $\rightarrow$ local SHAP factors.
 \end{enumerate}
 
-\subsection{Why these methods are chosen}
+\subsection{Why these methods were chosen}
 \begin{description}
-  \item[SHAP]
-        Unified attribution for global and local explanations; suitable for
-        faculty demonstration and business trust.
-  \item[Statistical analysis alongside SHAP]
-        SHAP explains the model; tests support whether relationships appear in
-        the data.
+  \item[SHAP TreeExplainer]
+        Compatible with Random Forest; efficient global/local attributions.
+  \item[Statistical tests alongside SHAP]
+        SHAP explains the model; tests support data-level associations.
   \item[Streamlit]
-        Fast interactive demo for viva walkthroughs.
-  \item[Use M3's final model only]
-        Explanations and deployment must match reported metrics.
+        Fast interactive faculty/business demo.
+  \item[Frozen M3 model only]
+        Explanations match reported M3 metrics.
 \end{description}
 
 \subsection{Likely viva questions (Member~4)}
@@ -486,6 +495,11 @@ analysis, and deliver a Streamlit application for interactive demonstration.
   \item Difference between global and local explanation?
   \item What does a high SHAP value mean for a feature?
   \item How does the app avoid using prediction-period inputs?
+\end{itemize}
+
+\subsection{Still outstanding}
+\begin{itemize}
+  \item Commit M4 artifacts to GitHub; record a live Streamlit demo if required.
 \end{itemize}
 
 \newpage
@@ -572,6 +586,8 @@ file path, a metric, or a commit --- not only a verbal claim.
 2026-09-25 & Team & M2 section updated to \done{} with RFM/behavioural results, leakage controls, and artifact paths. \\
 \hline
 2026-09-28 & Team & M3 section updated to \done{}: temporal split, LR/RF/XGB results, Random Forest selected. \\
+\hline
+2026-09-28 & Team & M4 section updated to \done{}: SHAP TreeExplainer, statistical tests, Streamlit app. \\
 \hline
 \end{tabular}
 

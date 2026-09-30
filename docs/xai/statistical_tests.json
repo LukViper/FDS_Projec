@@ -1,0 +1,163 @@
+{
+  "alpha": 0.05,
+  "numeric_tests": [
+    {
+      "feature": "recency_days",
+      "test": "mannwhitney_u",
+      "statistic": 3130716.0,
+      "p_value": 1.9302735105668828e-113,
+      "significant": true,
+      "point_biserial_r": 0.3135040242953035,
+      "point_biserial_p": 3.8536234839803307e-97,
+      "mean_churned": 126.33152909336941,
+      "mean_retained": 70.84409136047667
+    },
+    {
+      "feature": "frequency",
+      "test": "mannwhitney_u",
+      "statistic": 1037948.5,
+      "p_value": 7.217132034328125e-209,
+      "significant": true,
+      "point_biserial_r": -0.2670597239231299,
+      "point_biserial_p": 5.162114078378039e-70,
+      "mean_churned": 2.3238610735227785,
+      "mean_retained": 6.540714995034756
+    },
+    {
+      "feature": "monetary",
+      "test": "mannwhitney_u",
+      "statistic": 1092721.0,
+      "p_value": 1.9579763317347745e-181,
+      "significant": true,
+      "point_biserial_r": -0.1414026453386946,
+      "point_biserial_p": 2.431872362680121e-20,
+      "mean_churned": 851.8427230491656,
+      "mean_retained": 3220.437327209533
+    },
+    {
+      "feature": "avg_order_value",
+      "test": "mannwhitney_u",
+      "statistic": 1763102.5,
+      "p_value": 2.750666886849868e-32,
+      "significant": true,
+      "point_biserial_r": -0.05066257844724637,
+      "point_biserial_p": 0.000978807973137395,
+      "mean_churned": 355.8351766994159,
+      "mean_retained": 407.03684163920536
+    },
+    {
+      "feature": "purchase_interval_days",
+      "test": "mannwhitney_u",
+      "statistic": 2515369.5,
+      "p_value": 3.6947517369993814e-13,
+      "significant": true,
+      "point_biserial_r": 0.0743074366142438,
+      "point_biserial_p": 1.3070837566885312e-06,
+      "mean_churned": 62.52053148548824,
+      "mean_retained": 55.65396917407542
+    },
+    {
+      "feature": "product_diversity",
+      "test": "mannwhitney_u",
+      "statistic": 1320359.0,
+      "p_value": 6.134380055603168e-117,
+      "significant": true,
+      "point_biserial_r": -0.2908970558616137,
+      "point_biserial_p": 2.6856751103967238e-83,
+      "mean_churned": 39.013531799729364,
+      "mean_retained": 87.70556107249256
+    },
+    {
+      "feature": "cancellation_rate",
+      "test": "mannwhitney_u",
+      "statistic": 1799561.5,
+      "p_value": 4.0643799243864497e-35,
+      "significant": true,
+      "point_biserial_r": -0.10850445757216617,
+      "point_biserial_p": 1.4772196340084483e-12,
+      "mean_churned": 0.10395686223852064,
+      "mean_retained": 0.14258194391212875
+    },
+    {
+      "feature": "spending_trend",
+      "test": "mannwhitney_u",
+      "statistic": 2152595.5,
+      "p_value": 0.044001001135698575,
+      "significant": true,
+      "point_biserial_r": -0.04878343719503064,
+      "point_biserial_p": 0.001502882417594988,
+      "mean_churned": 0.15642145269429084,
+      "mean_retained": 0.2299190793779453
+    },
+    {
+      "feature": "order_trend",
+      "test": "mannwhitney_u",
+      "statistic": 2138657.5,
+      "p_value": 0.017223741926802087,
+      "significant": true,
+      "point_biserial_r": -0.04119199529813076,
+      "point_biserial_p": 0.007368248921582012,
+      "mean_churned": 0.15513779421237872,
+      "mean_retained": 0.21642037890830335
+    },
+    {
+      "feature": "obs_n_lines",
+      "test": "mannwhitney_u",
+      "statistic": 1218096.5,
+      "p_value": 3.749836218732419e-144,
+      "significant": true,
+      "point_biserial_r": -0.23793555977349284,
+      "point_biserial_p": 1.5562779231668226e-55,
+      "mean_churned": 47.030672079386555,
+      "mean_retained": 137.96573982125125
+    },
+    {
+      "feature": "avg_line_quantity",
+      "test": "mannwhitney_u",
+      "statistic": 1971304.5,
+      "p_value": 4.620797371276846e-11,
+      "significant": true,
+      "point_biserial_r": -0.005848268314134056,
+      "point_biserial_p": 0.70372413506485,
+      "mean_churned": 21.28423510519227,
+      "mean_retained": 22.678589699352337
+    },
+    {
+      "feature": "purchase_interval_imputed",
+      "test": "mannwhitney_u",
+      "statistic": 2991947.0,
+      "p_value": 3.6030411139572956e-121,
+      "significant": true,
+      "point_biserial_r": 0.35989933149823006,
+      "point_biserial_p": 1.3930339424780313e-129,
+      "mean_churned": 0.4970681100586378,
+      "mean_retained": 0.15690168818272096
+    }
+  ],
+  "categorical_tests": [
+    {
+      "feature": "country",
+      "test": "chi_square",
+      "statistic": 26.646563819586916,
+      "p_value": 0.0008134755108478047,
+      "dof": 8,
+      "significant": true
+    }
+  ],
+  "significant_numeric_features": [
+    "frequency",
+    "monetary",
+    "obs_n_lines",
+    "purchase_interval_imputed",
+    "product_diversity",
+    "recency_days",
+    "cancellation_rate",
+    "avg_order_value",
+    "purchase_interval_days",
+    "avg_line_quantity",
+    "order_trend",
+    "spending_trend"
+  ],
+  "n_significant_numeric": 12,
+  "country_significant": true
+}
