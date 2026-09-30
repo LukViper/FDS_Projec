@@ -28,10 +28,10 @@ FDS_Project/
 
 | Module | Owner    | Directory focus                          |
 | ------ | -------- | ---------------------------------------- |
-| M1     | Member 1 | `DataSet/` → `data/processed/`, `notebooks/`, `src/` |
-| M2     | Member 2 | `data/processed/` → `data/features/`, `notebooks/` |
-| M3     | Member 3 | `data/features/` → `models/`, `notebooks/` |
-| M4     | Member 4 | `models/` → `app/`, SHAP / stats in `notebooks/` or `docs/` |
+| M1     | Shasank  | `DataSet/` → `data/processed/`, `notebooks/`, `src/` |
+| M2     | Boni Ravi| `data/processed/` → `data/features/`, `notebooks/` |
+| M3     | Vaishnavi| `data/features/` → `models/`, `notebooks/` |
+| M4     | Bhavani  | `models/` → `app/`, SHAP / stats in `notebooks/` or `docs/` |
 
 ## Dataset
 
