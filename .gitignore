@@ -1,94 +1,98 @@
-# =============================================================================
-# .gitignore — Customer Churn Prediction (M1-aware)
-# =============================================================================
-# Ignore local/cache/tooling noise only.
-# Do NOT ignore M1 handoff artifacts that Member 2 requires (see bottom).
-# =============================================================================
+# ==============================
+# Python
+# ==============================
 
-# --- Python ---
 __pycache__/
 *.py[cod]
 *$py.class
 *.so
-.Python
-*.egg
-*.egg-info/
-.eggs/
-dist/
-build/
-pip-wheel-metadata/
 
 # Virtual environments
 .venv/
 venv/
 env/
 ENV/
+.env/
+.python-version
 
-# Test / type / lint caches
+# ==============================
+# Jupyter
+# ==============================
+
+.ipynb_checkpoints/
+
+# ==============================
+# IDE / Editor
+# ==============================
+
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# ==============================
+# Secrets
+# ==============================
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+secrets/
+credentials/
+
+# ==============================
+# Logs / Temporary files
+# ==============================
+
+*.log
+*.tmp
+*.temp
+tmp/
+temp/
+.cache/
+
+# ==============================
+# Python tooling
+# ==============================
+
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
 .coverage
 htmlcov/
-.tox/
-.cache/
 
-# --- Jupyter ---
-.ipynb_checkpoints/
+# ==============================
+# Raw dataset
+# ==============================
 
-# --- OS / editor ---
-.DS_Store
+DataSet/online_retail_II.xlsx
+DataSet/*.xlsx
+DataSet/*.xls
+
+# ==============================
+# Generated temporary data
+# ==============================
+
+*.parquet.tmp
+*.csv.tmp
+
+# ==============================
+# OS files
+# ==============================
+
 Thumbs.db
-Desktop.ini
-*~
-*.swp
-*.swo
-.idea/
-.vscode/
-*.code-workspace
+.DS_Store
 
-# --- Secrets / local env (never commit) ---
-.env
-.env.*
-!.env.example
+# ==============================
+# Model artifacts
+# ==============================
 
-# --- LaTeX build byproducts (keep viva.tex tracked) ---
-*.aux
-*.log
-*.out
-*.toc
-*.synctex.gz
-*.fls
-*.fdb_latexmk
-missfont.log
-
-# --- Excel lock / temp files ---
-~$*.xlsx
-~$*.xls
-
-# --- Optional local scratch (not part of handoff) ---
-tmp/
-temp/
-*.tmp
-
-# =============================================================================
-# MEMBER 2 HANDOFF — keep these tracked (no ignore rules above target them)
-# =============================================================================
-# Required for M2:
-#   data/processed/customer_churn_labels.parquet
-#   data/processed/customer_churn_labels.csv
-#   data/processed/transactions_cleaned.parquet
-#   data/processed/m1_validation_report.json
-#   docs/preprocessing_decisions.md
-#   docs/dataset_source.md
-#   src/preprocessing.py
-#   notebooks/m1_preprocessing.ipynb
-#
-# Also kept (reproducibility / faculty):
-#   DataSet/online_retail_II.xlsx
-#   DataSet/README.md
-#   PLAN.md, PROGRESS.md, viva.tex, README.md, requirements.txt
-#
-# M2 will add (also do not ignore):
-#   data/features/*
-# =============================================================================
+# Uncomment if models become very large
+# models/*.pkl
+# models/*.joblib
+# models/*.json
+# models/*.ubj
