@@ -14,7 +14,7 @@
 | M1 Data & Preprocessing | Member 1 | Completed   |       ~100% | Artifacts + commits on branch `Shasank` (`c9d5a74`). |
 | M2 EDA & Features       | Member 2 | In Progress |         ~90% | Features/EDA exist; M2 git commit may still be pending on some machines. |
 | M3 Machine Learning     | Member 3 | In Progress |         ~90% | Models trained + `final_model.joblib`; M3 git commit pending. |
-| M4 XAI & Deployment     | Member 4 | Not Started |          — | Final model ready for M4; no SHAP/Streamlit yet. |
+| M4 XAI & Deployment     | Member 4 | In Progress |         ~90% | SHAP + stats + Streamlit done; M4 git commit pending. |
 
 ---
 
@@ -43,8 +43,8 @@ Recorded from inspection on **2026-09-25**.
 | `data/processed/` | M1 outputs |
 | `data/features/` | M2 outputs + `figures/` |
 | `models/` | M3 artifacts present (`final_model.joblib`, metrics) |
-| `app/` | Empty (M4) |
-| `docs/` | M1 + M2 + M3 documentation |
+| `app/` | M4 Streamlit app (`streamlit_app.py`) |
+| `docs/` | M1–M4 documentation + `docs/xai/` |
 
 ### Existing datasets
 
@@ -64,6 +64,7 @@ Recorded from inspection on **2026-09-25**.
 | `notebooks/m1_preprocessing.ipynb` | M1 |
 | `notebooks/m2_eda_features.ipynb` | M2 |
 | `notebooks/m3_modeling.ipynb` | M3 |
+| `notebooks/m4_shap_analysis.ipynb` | M4 |
 
 ### Existing scripts
 
@@ -72,8 +73,10 @@ Recorded from inspection on **2026-09-25**.
 | `src/preprocessing.py` | M1 pipeline |
 | `src/features.py` | M2 EDA helpers + feature engineering |
 | `src/modeling.py` | M3 temporal split + LR/RF/XGB + selection |
+| `src/explain.py` | M4 SHAP + statistical tests |
+| `app/streamlit_app.py` | M4 Streamlit demo |
 | `src/__init__.py` | Package marker |
-| `requirements.txt` | pandas, sklearn, xgboost, joblib, … |
+| `requirements.txt` | pandas, sklearn, xgboost, shap, streamlit, … |
 
 ### Existing models
 
@@ -281,9 +284,7 @@ In Progress *(training + artifacts done; M3 git commit outstanding)*
 
 ### Handoff to Member 4
 
-- Status: **Ready**
-- Load: `models/final_model.joblib` (or `final_bundle.joblib`)
-- Do not retrain a substitute without Decision Log entry
+- Status: **Accepted by M4** (validated in `docs/xai/m4_xai_report.json`)
 
 ### Last Updated
 
@@ -295,36 +296,55 @@ In Progress *(training + artifacts done; M3 git commit outstanding)*
 
 ### Status
 
-Not Started
+In Progress *(SHAP + stats + Streamlit done; M4 git commit outstanding)*
 
 ### Completed
 
-- [ ] *(none)*
+- [x] Load final trained model — `models/final_model.joblib`
+- [x] Implement SHAP — `TreeExplainer` in `src/explain.py`
+- [x] Generate global feature importance — `docs/xai/shap_global_importance.csv` + figures
+- [x] Generate individual customer explanations — `docs/xai/shap_local_examples.json`
+- [x] Perform statistical analysis — Mann–Whitney / point-biserial / chi-square
+- [x] Document significant relationships — `docs/shap_and_stats.md`, `statistical_tests.json`
+- [x] Build Streamlit interface — `app/streamlit_app.py`
+- [x] Display customer info, probability, risk, top factors, SHAP
+- [x] Integrate model + preprocessing pipeline (frozen M3 Pipeline)
+- [x] Smoke-test prediction + SHAP path
+- [x] Document deployment — `docs/deployment.md`
+- [x] Prepare faculty evidence checklist — `docs/m4_faculty_evidence.md`
 
 ### In Progress
 
-- [ ] None
+- [ ] Commit M4 work to GitHub
+- [ ] Live Streamlit demo recording for faculty (run locally)
 
 ### Blocked
 
-- [ ] Previously blocked on M3 model + pipeline — **blocker cleared** (`models/final_model.joblib` ready)
-
+- [ ] None
 
 ### Outputs
 
-- None
+| Artifact | Path |
+| -------- | ---- |
+| Explain module | `src/explain.py` |
+| Streamlit app | `app/streamlit_app.py` |
+| XAI report | `docs/xai/m4_xai_report.json` |
+| SHAP figures | `docs/xai/figures/` |
+| Stats results | `docs/xai/statistical_tests.json` |
+
+**Stats summary:** 12/12 numeric features significant at α=0.05; country significant.  
+**Top SHAP drivers (sample):** monetary, frequency, avg_order_value, spending_trend, …
 
 ### Evidence
 
-- File: —
-- Commit: —
-- Branch: —
-- Screenshot: —
-- Result: —
+- File: `src/explain.py`, `app/streamlit_app.py`, `docs/xai/*`
+- Commit: *pending*
+- Branch: `Shasank`
+- Result: M3 handoff `all_passed`; explanations use frozen RF
 
 ### Last Updated
 
-2026-09-25
+2026-09-28
 
 ---
 
@@ -343,11 +363,11 @@ Not Started
 | Models trained                 | M3    | Completed   | LR / RF / XGB pipelines under `models/` |
 | Model evaluation completed     | M3    | Completed   | `models/model_comparison.json` |
 | Final model saved              | M3    | Completed   | `models/final_model.joblib` (random_forest) |
-| SHAP implemented               | M4    | Not Started | — |
-| Statistical analysis completed | M4    | Not Started | — |
-| Streamlit completed            | M4    | Not Started | — |
-| Final integration completed    | M4    | Not Started | — |
-| Final documentation completed  | All   | Not Started | Tracking docs + M1 docs only |
+| SHAP implemented               | M4    | Completed   | `src/explain.py` + `docs/xai/figures/` |
+| Statistical analysis completed | M4    | Completed   | `docs/xai/statistical_tests.json` |
+| Streamlit completed            | M4    | Completed   | `app/streamlit_app.py` |
+| Final integration completed    | M4    | Completed   | App loads M3 `final_model.joblib` + M2 features |
+| Final documentation completed  | All   | In Progress | M1–M4 docs exist; shared viva/PROGRESS updated |
 
 ---
 
@@ -359,6 +379,7 @@ Not Started
 | 2026-09-25 | Member 1 (Shasank) | `Shasank` | `c9d5a74` | Data Preprocessing Done - by Shasank | `git log`; M1 artifacts |
 | 2026-09-25 | Member 2 | `Shasank` | — | M2 features/EDA implemented locally; not committed yet | `git status` shows untracked/modified M2 files |
 | 2026-09-28 | Member 3 | `Shasank` | — | M3 modelling implemented locally; not committed yet | `models/final_model.joblib` present; untracked/modified |
+| 2026-09-28 | Member 4 | `Shasank` | — | M4 XAI + Streamlit implemented locally; not committed yet | `app/streamlit_app.py`, `docs/xai/` |
 
 ---
 
@@ -476,6 +497,30 @@ Reason: Highest validation PR-AUC (0.725) vs LR (0.691) and XGBoost (0.691); tie
 Evidence: `models/model_comparison.json`; `docs/experiment_notes.md`.  
 Affected Modules: M3, M4  
 
+## Decision: SHAP TreeExplainer
+
+Date: 2026-09-28  
+Decision: Explain the frozen RF with `shap.TreeExplainer` on preprocessed features.  
+Reason: Model-compatible, efficient for trees; supports global and local explanations.  
+Evidence: `src/explain.py`; `docs/xai/m4_xai_report.json`.  
+Affected Modules: M4  
+
+## Decision: Statistical tests for feature–churn association
+
+Date: 2026-09-28  
+Decision: Mann–Whitney U + point-biserial for numerics; chi-square for country (α=0.05).  
+Reason: Nonparametric comparison of churned vs retained; complements SHAP (model) with data-level tests.  
+Evidence: `docs/xai/statistical_tests.json`; `docs/shap_and_stats.md`.  
+Affected Modules: M4  
+
+## Decision: Streamlit risk bands
+
+Date: 2026-09-28  
+Decision: Low < 0.33; Medium mid; High ≥ 0.66 on predicted churn probability.  
+Reason: Simple, interpretable demo thresholds (business can retune).  
+Evidence: `app/streamlit_app.py`; `docs/deployment.md`.  
+Affected Modules: M4  
+
 
 ## 6. Experiment Log
 
@@ -494,7 +539,7 @@ Selection criterion: highest validation PR-AUC. Details: `models/model_compariso
 | Date       | Problem | Module | Cause | Resolution | Commit |
 | ---------- | ------- | ------ | ----- | ---------- | ------ |
 | 2026-09-25 | Git history / branches / commits cannot be used for faculty evidence yet | All | Git initialized on `master` but has zero commits, no remotes, no feature branches | **Resolved for M1:** commits exist on `Shasank` (`c9d5a74`). M2 commit still pending. | `c9d5a74` |
-| 2026-09-25 | `to_parquet` failed on `StockCode` | M1 | Mixed int/str values in object column | Cast `Invoice`, `StockCode`, `Description`, `Country` to `str` before write | — |
+| 2026-09-28 | SHAP output shape differs by version | M4 | ndarray (n, features, classes) vs list | Normalize via `_positive_class_shap()` | — |
 
 ---
 
@@ -524,15 +569,14 @@ Receiving member: Member 3
 
 ## M3 → M4
 
-Status: **Ready** (awaiting Member 4 acknowledgment)  
+Status: **Completed / accepted**  
 Date: 2026-09-28  
 Input artifact: `data/features/customer_features.parquet`  
-Output artifact: `models/final_model.joblib` (+ `final_bundle.joblib`, metrics JSON)  
-Validation performed: comparison across LR/RF/XGB; RF selected on val PR-AUC; test ROC-AUC 0.755  
+Output artifact: `models/final_model.joblib` (+ bundle, metrics)  
+Validation performed: M4 `m3_handoff_validation.all_passed = true` in `docs/xai/m4_xai_report.json`  
 Known limitations:  
-- M3 git commit not yet recorded  
-- Default probability threshold 0.5; M4/business may retune threshold  
-- Temporal cohort shift (train churn 74% vs test 37%)  
+- M3/M4 git commits not yet recorded  
+- Streamlit live demo should be run for faculty screenshots  
 Git commit: —  
 Receiving member: Member 4  
 
@@ -575,13 +619,13 @@ Receiving member: Member 4
 
 ### Member 4
 
-* [ ] Can explain SHAP
-* [ ] Can explain global explanation
-* [ ] Can explain local explanation
-* [ ] Can explain statistical analysis
-* [ ] Can demonstrate Streamlit
-* [ ] Can explain model integration
-* [ ] Can show GitHub commits
+* [x] Can explain SHAP — TreeExplainer on frozen RF
+* [x] Can explain global explanation — mean |SHAP| + figures
+* [x] Can explain local explanation — per-customer top factors
+* [x] Can explain statistical analysis — Mann–Whitney / chi-square
+* [x] Can demonstrate Streamlit — `app/streamlit_app.py`
+* [x] Can explain model integration — loads `final_model.joblib`
+* [ ] Can show GitHub commits — **M4 commit pending**
 
 ---
 
